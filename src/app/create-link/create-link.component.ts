@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {CREATE_LINK_MUTATION, CreateLinkMutationResponse} from '../graphql';
 
 @Component({
   selector: 'hn-create-link',
@@ -6,16 +8,24 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./create-link.component.css']
 })
 export class CreateLinkComponent implements OnInit {
-  description: string = '';
-  url: string = '';
+  description = '';
+  url = '';
 
-  constructor() {
+  constructor(private apollo: Apollo) {
   }
 
   ngOnInit() {
   }
 
   createLink() {
-    // ... you'll implement this in a bit
+    this.apollo.mutate({
+      mutation: CREATE_LINK_MUTATION,
+      variables: {
+        description: this.description,
+        url: this.url
+      }
+    }).subscribe((response) => {
+
+    });
   }
 }
